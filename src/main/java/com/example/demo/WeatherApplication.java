@@ -1,0 +1,20 @@
+package com.example.demo;
+
+import org.flywaydb.core.Flyway;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class WeatherApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(WeatherApplication.class, args);
+        Flyway flyway = Flyway.configure()
+                .dataSource("jdbc:postgresql://localhost:5432/postgres", "postgres", "demo")
+                .locations("classpath:db/migration")
+                .load();
+
+        flyway.migrate();
+    }
+
+}
